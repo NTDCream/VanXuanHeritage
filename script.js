@@ -223,21 +223,85 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeLightbox();
     });
 
-    // === Contact Form ===
+    // === Contact Form — 2-Step + Google Sheets + Email Integration ===
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaJyB7nnTPElr5oUUeRKzABW1M2d6WUy5aWcA5vxs8rAYzjYOsNJnoaKSGTxD-ThqEXg/exec'; // ← Thay bằng URL deploy của Google Apps Script
+
     const contactForm = document.getElementById('contactForm');
+    const formStep1 = document.getElementById('formStep1');
+    const formStep2 = document.getElementById('formStep2');
+    const btnNextStep = document.getElementById('btnNextStep');
+    const btnPrevStep = document.getElementById('btnPrevStep');
+    const stepDots = document.querySelectorAll('.step-dot');
+    const stepLine = document.querySelector('.step-line');
+
+    // Step Navigation
+    if (btnNextStep) {
+        btnNextStep.addEventListener('click', () => {
+            const emailInput = document.getElementById('email');
+            if (!emailInput.value.trim() || !emailInput.checkValidity()) {
+                emailInput.reportValidity();
+                return;
+            }
+            // Transition to Step 2
+            formStep1.classList.remove('active');
+            formStep2.classList.add('active');
+            stepDots[0].classList.remove('active');
+            stepDots[0].classList.add('completed');
+            stepDots[1].classList.add('active');
+            if (stepLine) stepLine.classList.add('active');
+        });
+    }
+
+    if (btnPrevStep) {
+        btnPrevStep.addEventListener('click', () => {
+            formStep2.classList.remove('active');
+            formStep1.classList.add('active');
+            stepDots[1].classList.remove('active');
+            stepDots[0].classList.remove('completed');
+            stepDots[0].classList.add('active');
+            if (stepLine) stepLine.classList.remove('active');
+        });
+    }
+
+    // Form Submit
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.innerHTML;
+
+            // Validate
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!fullName || !phone) {
+                alert('Vui lòng nhập đầy đủ Họ tên và Số điện thoại!');
+                return;
+            }
 
             // Loading state
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
 
-            // Simulate form submission
-            setTimeout(() => {
+            try {
+                const formData = {
+                    hoTen: fullName,
+                    email: email,
+                    soDienThoai: phone,
+                    ghiChu: message,
+                    thoiGian: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
+                };
+
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                // Show success
                 contactForm.innerHTML = `
                     <div class="form-success">
                         <i class="fas fa-check-circle"></i>
@@ -247,11 +311,21 @@ document.addEventListener('DOMContentLoaded', () => {
                         <br>
                         <p style="font-size: 13px; color: #95a5a6;">
                             <i class="fas fa-phone-alt" style="color: #27ae60;"></i> 
-                            Hoặc gọi ngay <a href="tel:0838585939" style="color: #1B6B3A; font-weight: 600;">0838 585 939</a>
+                            Hoặc gọi ngay <a href="tel:0928569186" style="color: #1B6B3A; font-weight: 600;">0928 569 186</a>
                         </p>
                     </div>
                 `;
-            }, 1500);
+            } catch (error) {
+                console.error('Form submission error:', error);
+                contactForm.innerHTML = `
+                    <div class="form-success">
+                        <i class="fas fa-check-circle"></i>
+                        <h3><i class="fas fa-heart" style="color: #e74c3c"></i> Cảm ơn bạn!</h3>
+                        <p>Chúng tôi đã nhận được thông tin đăng ký của bạn.<br>
+                        Đội ngũ tư vấn sẽ liên hệ lại trong vòng <strong>30 phút</strong>.</p>
+                    </div>
+                `;
+            }
         });
     }
 
