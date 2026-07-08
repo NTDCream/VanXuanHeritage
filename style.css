@@ -1289,7 +1289,7 @@ ul {
     gap: 12px;
     font-size: 14px;
     color: var(--text);
-    padding: 6px 0;
+    /* padding: 6px 0; */
 }
 
 .legend-dot {
@@ -1321,7 +1321,8 @@ ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
-    align-items: start;
+    align-items: center;
+    /* Đổi từ start sang center để cân đối 2 cột */
 }
 
 .infra-image-group {
@@ -1362,12 +1363,19 @@ ul {
 
 .infra-feature {
     display: flex;
-    gap: 16px;
-    padding: 20px;
+    flex-direction: column;
+    gap: 12px;
+    padding: 30px;
     background: #fff;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border);
     transition: var(--transition);
+}
+
+.infra-feature-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 .infra-feature:hover {
@@ -1377,15 +1385,15 @@ ul {
 }
 
 .infra-feature-icon {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     border-radius: var(--radius-xs);
     background: linear-gradient(135deg, rgba(27, 107, 58, 0.08), rgba(198, 151, 63, 0.08));
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--primary);
-    font-size: 20px;
+    font-size: 18px;
     flex-shrink: 0;
 }
 
@@ -1393,13 +1401,15 @@ ul {
     font-size: 16px;
     color: var(--navy);
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 0;
 }
 
 .infra-feature p {
     font-size: 14px;
     color: var(--text-light);
     line-height: 1.5;
+
+    margin: 0;
 }
 
 /* === Press Section === */
@@ -2323,10 +2333,24 @@ ul {
         display: flex;
     }
 
+    .nav-toggle.active span {
+        background: var(--navy) !important; /* Đổi màu dấu X thành màu tối để hiển thị trên nền trắng */
+    }
+
+    .nav-logo-img {
+        height: 40px; /* Thu nhỏ logo trên mobile */
+    }
+
+    .nav-logo-partner {
+        height: 36px; /* Thu nhỏ logo trên mobile */
+    }
+
+    .hero {
+        padding-top: 100px; /* Đẩy nội dung hero xuống để không bị navbar đè lên */
+    }
+
     .hero-stats {
-        flex-direction: column;
-        gap: 16px;
-        padding: 24px;
+        display: none;
     }
 
     .hero-stat-divider {
