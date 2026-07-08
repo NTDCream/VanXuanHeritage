@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactForm.innerHTML = `
                     <div class="form-success">
                         <i class="fas fa-check-circle"></i>
-                        <h3><i class="fas fa-heart" style="color: #e74c3c"></i> Cảm ơn bạn!</h3>
+                        <h3>Cảm ơn bạn!</h3>
                         <p>Chúng tôi đã nhận được thông tin đăng ký của bạn.<br>
                         Đội ngũ tư vấn sẽ liên hệ lại trong vòng <strong>30 phút</strong>.</p>
                         <br>
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactForm.innerHTML = `
                     <div class="form-success">
                         <i class="fas fa-check-circle"></i>
-                        <h3><i class="fas fa-heart" style="color: #e74c3c"></i> Cảm ơn bạn!</h3>
+                        <h3>Cảm ơn bạn!</h3>
                         <p>Chúng tôi đã nhận được thông tin đăng ký của bạn.<br>
                         Đội ngũ tư vấn sẽ liên hệ lại trong vòng <strong>30 phút</strong>.</p>
                     </div>
