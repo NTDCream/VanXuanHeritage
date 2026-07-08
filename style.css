@@ -760,12 +760,19 @@ ul {
 
 .info-card {
     display: flex;
-    gap: 14px;
+    flex-direction: column;
+    gap: 8px;
     background: #fff;
     padding: 18px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border);
     transition: var(--transition);
+}
+
+.info-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .info-card:hover {
@@ -775,33 +782,34 @@ ul {
 }
 
 .info-card-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     background: linear-gradient(135deg, rgba(27, 107, 58, 0.1), rgba(198, 151, 63, 0.1));
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--primary);
-    font-size: 18px;
+    font-size: 16px;
     flex-shrink: 0;
 }
 
-.info-card-content h4 {
+.info-card h4 {
     font-size: 13px;
     font-weight: 600;
     color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 4px;
+    margin-bottom: 0;
 }
 
-.info-card-content p {
+.info-card p {
     font-size: 14px;
     color: var(--navy);
     font-weight: 500;
     line-height: 1.5;
     margin-bottom: 0;
+    
 }
 
 /* Image Frame */
@@ -2308,8 +2316,8 @@ ul {
         height: 100vh;
         background: #fff;
         flex-direction: column;
-        justify-content: center;
-        gap: 8px;
+        /* justify-content: center; */
+        gap: 20px;
         padding: 40px;
         transition: right 0.4s ease;
         box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
@@ -2364,7 +2372,7 @@ ul {
     }
 
     .overview-info-cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr; /* Đổi thành 1 cột trên mobile để thẻ rộng rãi, chữ không bị rớt dòng gây lệch icon */
     }
 
     .highlights-grid {
